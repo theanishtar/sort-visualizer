@@ -7,7 +7,7 @@ package com.GUI;
 import com.swing.*;
 /**
  *
- * @author dangt
+ * @author Tran Huu Dang
  */
 public class ComplateSort extends javax.swing.JDialog {
 

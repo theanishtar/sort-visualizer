@@ -22,7 +22,7 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 
 /**
  *
- * @author dangt
+ * @author  Tran Huu Dang
  */
 public final class HuongDanDungFile extends javax.swing.JDialog {
 

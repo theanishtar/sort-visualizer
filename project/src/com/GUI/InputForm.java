@@ -16,7 +16,7 @@ import javax.swing.event.CaretEvent;
 
 /**
  *
- * @author dangt
+ * @author  Tran Huu Dang
  */
 public class InputForm extends javax.swing.JDialog {
 
