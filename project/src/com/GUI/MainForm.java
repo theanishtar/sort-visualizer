@@ -3,11 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+// 14h 12/3/2023
 package com.GUI;
 
+import com.algorithm.QuickSort.Quick;
 import com.sun.tools.javac.Main;
 import com.swing.Button;
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Frame;
 import java.awt.Image;
 import java.awt.TextArea;
@@ -17,6 +20,7 @@ import java.awt.event.MouseEvent;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 import java.util.logging.Level;
@@ -43,6 +47,7 @@ public class MainForm extends javax.swing.JFrame {
      */
     //tạo danh sách các phần tử tương ứng với mảng được ô tả
     List<Integer> arr = new ArrayList<>();
+    List<Integer> listTempQuick = new ArrayList<>();
 
     //kiểm tra kết quả
     boolean result = false;
@@ -70,7 +75,9 @@ public class MainForm extends javax.swing.JFrame {
     public MainForm() {
         initComponents();
         visibleFalseMid();
-        //runTittle();
+        //runTittle();Cascadia Code
+        
+        linkeListModel.setFont(new Font("Fira Code", Font.PLAIN, 18));// set the font
 
         btnSort.setEnabled(false);
         btnDelete.setEnabled(false);
@@ -86,6 +93,7 @@ public class MainForm extends javax.swing.JFrame {
         this.setIconImage(img);
 
         //tạo description cho từng componnets
+        /*
         PopupMenuListener pml = new PopupMenuListener();
         lblInfor.addMouseListener(pml);
         btnCreateFromKey.addMouseListener(pml);
@@ -100,6 +108,7 @@ public class MainForm extends javax.swing.JFrame {
         rdoQuickSort.addMouseListener(pml);
         rdoSelectionSort.addMouseListener(pml);
         rdoShellSort.addMouseListener(pml);
+         */
     }
 
     // Cac thanh phan cua PopUp
@@ -107,6 +116,7 @@ public class MainForm extends javax.swing.JFrame {
     JMenuItem line;
 
     // Ham khoi tao
+    /*
     public void initPopUp(String text) {
         // Tao popup menu
         popUp = new JPopupMenu("My PopUp Menu");
@@ -135,7 +145,7 @@ public class MainForm extends javax.swing.JFrame {
             popUp.setVisible(false);
         }
     }
-
+     */
     public void addArr(Button btn) {
         btn.setText("0");
     }
@@ -283,7 +293,7 @@ public class MainForm extends javax.swing.JFrame {
                     try {
                         sleep(500);
                     } catch (InterruptedException ex) {
-                        Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+//                        Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
                     }
                     lblTittle.setText(txt);
                 }
@@ -328,108 +338,121 @@ public class MainForm extends javax.swing.JFrame {
     }
 
     public synchronized void hoanVi(Button btn1, Button btn2) {
-        new Thread(new Runnable() {
-            @Override
-            public synchronized void run() {
-                String msgBtn1 = btn1.getText();
+        String msgBtn1 = btn1.getText();
                 String msgBtn2 = btn2.getText();
-                if (btn1.getX() < btn2.getX()) {
-
-                    int x1 = btn1.getX();
-                    int x2 = btn2.getX();
-                    int x1To = getAlignmentXTop(btn2);
-                    int x2To = getAlignmentXTop(btn1);
-
-                    while (btn1.getY() > 42 && btn2.getY() < 198) {
-                        //cho btn1 đi lên
-                        btn1.setLocation(x1, btn1.getY() - 1);
-                        //cho btn2 đi xuống
-                        btn2.setLocation(x2, btn2.getY() + 1);
-                        try {
-                            Thread.sleep((long) (flash * 0.001));
-                        } catch (InterruptedException ex) {
-                            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
-                        }
-                    }
-
-                    while (btn1.getX() < x1To && btn2.getX() > x2To) {
-                        //cho btn1 qua phải
-                        btn1.setLocation(btn1.getX() + 1, btn1.getY());
-                        //cho btn2 qua trái
-                        btn2.setLocation(btn2.getX() - 1, btn2.getY());
-                        try {
-                            Thread.sleep((long) (flash * 0.001));
-                        } catch (InterruptedException ex) {
-                            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
-                        }
-                    }
-
-                    while (btn1.getY() < 120 && btn2.getY() > 120) {
-                        //cho btn1 đi xuống
-                        btn1.setLocation(btn1.getX(), btn1.getY() + 1);
-                        //cho btn2 đi lên
-                        btn2.setLocation(btn2.getX(), btn2.getY() - 1);
-                        try {
-                            Thread.sleep((long) (flash * 0.001));
-                        } catch (InterruptedException ex) {
-                            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
-                        }
-                    }
-                } else {
-                    int x1 = btn1.getX();
-                    int x2 = btn2.getX();
-                    int x1To = getAlignmentXTop(btn2);
-                    int x2To = getAlignmentXTop(btn1);
-
-                    while (btn2.getY() > 42 && btn1.getY() < 198) {
-                        //cho btn2 đi lên
-                        btn2.setLocation(x2, btn2.getY() - 1);
-                        //cho btn1 đi xuống
-                        btn1.setLocation(x1, btn1.getY() + 1);
-                        try {
-                            Thread.sleep((long) (flash * 0.001));
-                        } catch (InterruptedException ex) {
-                            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
-                        }
-                    }
-                    x1To = btn2.getX();
-                    x2To = btn1.getX();
-                    while (btn2.getX() < x2To && btn1.getX() > x1To) {
-                        //cho btn2 qua phải
-                        btn2.setLocation(btn2.getX() + 1, btn2.getY());
-                        //cho btn1 qua trái
-                        btn1.setLocation(btn1.getX() - 1, btn1.getY());
-                        try {
-                            Thread.sleep((long) (flash * 0.001));
-                        } catch (InterruptedException ex) {
-                            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
-                        }
-                    }
-
-                    while (btn2.getY() < 120 && btn1.getY() > 120) {
-                        //cho btn1 đi lên
-                        btn2.setLocation(btn2.getX(), btn2.getY() + 1);
-                        //cho btn2 đi xuống
-                        btn1.setLocation(btn1.getX(), btn1.getY() - 1);
-                        try {
-                            Thread.sleep((long) (flash * 0.001));
-                        } catch (InterruptedException ex) {
-                            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
-                        }
-                    }
-                }
-                //trả lại vik trí cũ
-                btn1.setLocation(btn2.getX(), btn2.getY());
-                btn2.setLocation(btn1.getX(), btn1.getY());
-
+                
                 //thay đổi nội dung
                 btn1.setText(msgBtn2);
                 btn2.setText(msgBtn1);
-            }
-        }).start();
+                
+//        new Thread(new Runnable() {
+//            @Override
+//            public synchronized void run() {
+//                String msgBtn1 = btn1.getText();
+//                String msgBtn2 = btn2.getText();
+//                
+//                //thay đổi nội dung
+//                btn1.setText(msgBtn2);
+//                btn2.setText(msgBtn1);
+//                if (btn1.getX() < btn2.getX()) {
+//
+//                    int x1 = btn1.getX();
+//                    int x2 = btn2.getX();
+//                    int x1To = getAlignmentXTop(btn2);
+//                    int x2To = getAlignmentXTop(btn1);
+//
+//                    while (btn1.getY() > 42 && btn2.getY() < 198) {
+//                        //cho btn1 đi lên
+//                        btn1.setLocation(x1, btn1.getY() - 1);
+//                        //cho btn2 đi xuống
+//                        btn2.setLocation(x2, btn2.getY() + 1);
+//                        try {
+//                            Thread.sleep((long) (flash * 0.001));
+//                        } catch (InterruptedException ex) {
+//                            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+//                        }
+//                    }
+//
+//                    while (btn1.getX() < x1To && btn2.getX() > x2To) {
+//                        //cho btn1 qua phải
+//                        btn1.setLocation(btn1.getX() + 1, btn1.getY());
+//                        //cho btn2 qua trái
+//                        btn2.setLocation(btn2.getX() - 1, btn2.getY());
+//                        try {
+//                            Thread.sleep((long) (flash * 0.001));
+//                        } catch (InterruptedException ex) {
+//                            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+//                        }
+//                    }
+//
+//                    while (btn1.getY() < 120 && btn2.getY() > 120) {
+//                        //cho btn1 đi xuống
+//                        btn1.setLocation(btn1.getX(), btn1.getY() + 1);
+//                        //cho btn2 đi lên
+//                        btn2.setLocation(btn2.getX(), btn2.getY() - 1);
+//                        try {
+//                            Thread.sleep((long) (flash * 0.001));
+//                        } catch (InterruptedException ex) {
+//                            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+//                        }
+//                    }
+//                } else {
+//                    int x1 = btn1.getX();
+//                    int x2 = btn2.getX();
+//                    int x1To = getAlignmentXTop(btn2);
+//                    int x2To = getAlignmentXTop(btn1);
+//
+//                    while (btn2.getY() > 42 && btn1.getY() < 198) {
+//                        //cho btn2 đi lên
+//                        btn2.setLocation(x2, btn2.getY() - 1);
+//                        //cho btn1 đi xuống
+//                        btn1.setLocation(x1, btn1.getY() + 1);
+//                        try {
+//                            Thread.sleep((long) (flash * 0.001));
+//                        } catch (InterruptedException ex) {
+//                            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+//                        }
+//                    }
+//                    x1To = btn2.getX();
+//                    x2To = btn1.getX();
+//                    while (btn2.getX() < x2To && btn1.getX() > x1To) {
+//                        //cho btn2 qua phải
+//                        btn2.setLocation(btn2.getX() + 1, btn2.getY());
+//                        //cho btn1 qua trái
+//                        btn1.setLocation(btn1.getX() - 1, btn1.getY());
+//                        try {
+//                            Thread.sleep((long) (flash * 0.001));
+//                        } catch (InterruptedException ex) {
+//                            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+//                        }
+//                    }
+//
+//                    while (btn2.getY() < 120 && btn1.getY() > 120) {
+//                        //cho btn1 đi lên
+//                        btn2.setLocation(btn2.getX(), btn2.getY() + 1);
+//                        //cho btn2 đi xuống
+//                        btn1.setLocation(btn1.getX(), btn1.getY() - 1);
+//                        try {
+//                            Thread.sleep((long) (flash * 0.001));
+//                        } catch (InterruptedException ex) {
+//                            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+//                        }
+//                    }
+//                }
+//                //trả lại vik trí cũ
+//                btn1.setLocation(btn2.getX(), btn2.getY());
+//                btn2.setLocation(btn1.getX(), btn1.getY());
+//
+//                
+//            }
+//        }).start();
     }
 
     public synchronized void shift(Button btn1, Button btn2) {
+        if(btn1.getX() == btn2.getX() && btn1.getY() == btn2.getY()){
+            System.out.println("Y: BTN1 ||| BTN2");
+            return;
+        }
         getFlash();
         String msgBtn1 = btn1.getText();
         String msgBtn2 = btn2.getText();
@@ -525,6 +548,23 @@ public class MainForm extends javax.swing.JFrame {
         //thay đổi nội dung
         btn1.setText(msgBtn2);
         btn2.setText(msgBtn1);
+
+    }
+    
+
+    public synchronized void goUp(Button btn1) {
+        getFlash();
+        String msgBtn1 = btn1.getText();
+        int x1 = btn1.getX();
+        while (btn1.getY() > 42) {
+            //cho btn1 đi lên
+            btn1.setLocation(x1, btn1.getY() - 1);
+            try {
+                Thread.sleep((long) (flash * 0.001));
+            } catch (InterruptedException ex) {
+                Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
 
     }
 
@@ -695,7 +735,7 @@ public class MainForm extends javax.swing.JFrame {
         return index1;
     }
 
-    public void getFlash() {
+    public synchronized void getFlash() {
         switch (sdFlash.getValue()) {
             case 10:
                 this.flash = 6000;
@@ -719,6 +759,12 @@ public class MainForm extends javax.swing.JFrame {
     }
 
     public void addInterchange() {
+        //[để tạm]: thay đổi giá trị ô màu tím (để phù hợp hơn cho QuickSort)
+        if (rdoQuickSort.isSelected()) {
+            jLabel5.setText("Pivot");
+        } else {
+            jLabel5.setText("Min/Max");
+        }
         /*
         void interchangeSort(int arr[], int n) {
             for (int i=0; i<n-1; i++) {
@@ -731,18 +777,18 @@ public class MainForm extends javax.swing.JFrame {
          */
         linkeListModel.getDropMode();
         listModel = new DefaultListModel();
-        listModel.addElement("void interchangeSort(int arr[], int n) {");
-        listModel.addElement("     for (int i=0; i<n-1; i++) {");
-        listModel.addElement("          for (int j=i+1; j<n; j++) {");
+        listModel.addElement("    void interchangeSort(int arr[], int n) {");
+        listModel.addElement("         for (int i=0; i<n-1; i++) {");
+        listModel.addElement("              for (int j=i+1; j<n; j++) {");
         if (rdoSortAZ.isSelected()) {
-            listModel.addElement("               if (arr[j] < arr[i])");
+            listModel.addElement("                   if (arr[j] < arr[i])");
         } else {
-            listModel.addElement("               if (arr[j] > arr[i])");
+            listModel.addElement("                   if (arr[j] > arr[i])");
         }
-        listModel.addElement("                   swaps(arr[j], arr[i]);");
+        listModel.addElement("                       swaps(arr[j], arr[i]);");
+        listModel.addElement("            }");
         listModel.addElement("        }");
         listModel.addElement("    }");
-        listModel.addElement("}");
         linkeListModel.setModel(listModel);
     }
 
@@ -836,6 +882,12 @@ public class MainForm extends javax.swing.JFrame {
 
     //Bubble sort
     public void addBubble() {
+        //[để tạm]: thay đổi giá trị ô màu tím (để phù hợp hơn cho QuickSort)
+        if (rdoQuickSort.isSelected()) {
+            jLabel5.setText("Pivot");
+        } else {
+            jLabel5.setText("Min/Max");
+        }
         /*
         for (int i=n-1; i>0; i--) {              
             for (int j=i; j<i; j++) {          
@@ -846,18 +898,18 @@ public class MainForm extends javax.swing.JFrame {
          */
         linkeListModel.getDropMode();
         listModel = new DefaultListModel();
-        listModel.addElement("void bubbleSort(int arr[], int n) {");
-        listModel.addElement("    for (int i=n-1; i>0; i--) {");
-        listModel.addElement("         for (int j=0; j<i; j++) {");
+        listModel.addElement("    void bubbleSort(int arr[], int n) {");
+        listModel.addElement("        for (int i=n-1; i>0; i--) {");
+        listModel.addElement("             for (int j=0; j<i; j++) {");
         if (rdoSortAZ.isSelected()) {
-            listModel.addElement("              if (arr[j] < arr[j+1])");
+            listModel.addElement("                  if (arr[j] < arr[j+1])");
         } else {
-            listModel.addElement("              if (arr[j] > arr[j+1])");
+            listModel.addElement("                  if (arr[j] > arr[j+1])");
         }
-        listModel.addElement("                  swaps(arr[j], arr[j+1]);");
-        listModel.addElement("         }");
+        listModel.addElement("                      swaps(arr[j], arr[j+1]);");
+        listModel.addElement("             }");
+        listModel.addElement("        }");
         listModel.addElement("    }");
-        listModel.addElement("}");
         linkeListModel.setModel(listModel);
     }
 
@@ -935,6 +987,12 @@ public class MainForm extends javax.swing.JFrame {
     }
 
     public void addSelection() {
+        //[để tạm]: thay đổi giá trị ô màu tím (để phù hợp hơn cho QuickSort)
+        if (rdoQuickSort.isSelected()) {
+            jLabel5.setText("Pivot");
+        } else {
+            jLabel5.setText("Min/Max");
+        }
         /*
         for (int i=0; i<n-1; i++)  {            
             int minIndex = i;                  
@@ -947,29 +1005,29 @@ public class MainForm extends javax.swing.JFrame {
          */
         linkeListModel.getDropMode();
         listModel = new DefaultListModel();
-        listModel.addElement("void selectionSort(int arr[], int n) {");
-        listModel.addElement("    for (int i=0; i<n-1; i++)  { ");
+        listModel.addElement("    void selectionSort(int arr[], int n) {");
+        listModel.addElement("        for (int i=0; i<n-1; i++)  { ");
         if (rdoSortAZ.isSelected()) {
-            listModel.addElement("         int minPos = i;   ");
-            listModel.addElement("         for (int j=i+1; j<n; j++) { ");
-            listModel.addElement("              if (arr[j] < arr[minPos])");
-            listModel.addElement("                  minPos = j; ");
-            listModel.addElement("         if (minPos != i)");
-            listModel.addElement("             swap(arr[i], arr[minPos]);");
-            listModel.addElement("         }");
-            listModel.addElement("    }");
-            listModel.addElement("}");
-
-        } else {
-            listModel.addElement("        int maxPos = i;   ");
-            listModel.addElement("        for (int j=i+1; j<n; j++) { ");
-            listModel.addElement("            if (arr[j] > arr[maxPos])");
-            listModel.addElement("                maxPos = j; ");
-            listModel.addElement("        if (maxPos != i)");
-            listModel.addElement("            swap(arr[i], arr[maxPos]);");
+            listModel.addElement("             int minPos = i;   ");
+            listModel.addElement("             for (int j=i+1; j<n; j++) { ");
+            listModel.addElement("                  if (arr[j] < arr[minPos])");
+            listModel.addElement("                      minPos = j; ");
+            listModel.addElement("             if (minPos != i)");
+            listModel.addElement("                 swap(arr[i], arr[minPos]);");
+            listModel.addElement("             }");
             listModel.addElement("        }");
             listModel.addElement("    }");
-            listModel.addElement("}");
+
+        } else {
+            listModel.addElement("            int maxPos = i;   ");
+            listModel.addElement("            for (int j=i+1; j<n; j++) { ");
+            listModel.addElement("                if (arr[j] > arr[maxPos])");
+            listModel.addElement("                    maxPos = j; ");
+            listModel.addElement("            if (maxPos != i)");
+            listModel.addElement("                swap(arr[i], arr[maxPos]);");
+            listModel.addElement("            }");
+            listModel.addElement("        }");
+            listModel.addElement("    }");
         }
 
         linkeListModel.setModel(listModel);
@@ -1082,6 +1140,245 @@ public class MainForm extends javax.swing.JFrame {
 
     }
 
+    //check sự sắp xếp của mảng
+    /*
+    Ascending : true -> Tăng dần
+    Ascending : False -> Giảm dần
+     */
+    public boolean checkSorted(boolean ascending) {
+        if (ascending) {
+            for (int i = this.start - 1; i < this.end - 2; i++) {
+                if (arr.get(i) > arr.get(i + 1)) {
+                    return false;
+                }
+            }
+        } else {
+            for (int i = this.start - 1; i < this.end - 2; i++) {
+                if (arr.get(i) < arr.get(i + 1)) {
+                    return false;
+                }
+            }
+        }
+
+        return true;
+    }
+
+    /*
+                        QUICK SORT BEGIN
+    ============================================================================
+     */
+    public void addQuick() {
+        //[để tạm]: thay đổi giá trị ô màu tím (để phù hợp hơn cho QuickSort)
+        if (rdoQuickSort.isSelected()) {
+            jLabel5.setText("Pivot");
+        } else {
+            jLabel5.setText("Min/Max");
+        }
+
+        linkeListModel.getDropMode();
+        listModel = new DefaultListModel();
+
+        /*
+        listModel.addElement("void QuickSort(int arr[], int l, int r)");
+        listModel.addElement("{");
+        listModel.addElement("    int pivot = a[(l+r)/2];");
+        listModel.addElement("    int i = l, j = r, temp;");
+        listModel.addElement("    while(i < j)");
+        listModel.addElement("    {");
+        if (rdoSortAZ.isSelected()) {
+            listModel.addElement("        while(a[i] < pivot) i++;");
+            listModel.addElement("        while(a[j] > pivot) j--;");
+        } else {
+            listModel.addElement("        while(a[i] > pivot) i++;");
+            listModel.addElement("        while(a[j] < pivot) j--;");
+        }
+        listModel.addElement("        if(i <= j)");
+        listModel.addElement("        {");
+        listModel.addElement("            swap(a[i], a[j]);");
+        listModel.addElement("        }");
+        listModel.addElement("    }");
+        listModel.addElement("    if(i < r) quickSort(a, i, r);");
+        listModel.addElement("    if(j > l) quickSort(a, l, j);");
+        listModel.addElement("}");
+        linkeListModel.setModel(listModel);
+         */
+        listModel.addElement("    void quickSort(int arr[], int L, int R) {");
+        listModel.addElement("          if (L >= R) return;");
+        listModel.addElement("          int pivot = L, i = L +1, j = R;");
+        listModel.addElement("          while (i <= j) {");
+        listModel.addElement("          while (i <= R && arr[i] <= arr[pivot]) {");
+        listModel.addElement("              i++");
+        listModel.addElement("          }");
+        listModel.addElement("          while (j > L && arr[j] >= arr[pivot]) {");
+        listModel.addElement("              j--");
+        listModel.addElement("          }");
+        listModel.addElement("          if (i > j)");
+        listModel.addElement("              swap(a[pivot], a[j]);");
+        listModel.addElement("          else ");
+        listModel.addElement("              swap(a[i] , a[j]);");
+        listModel.addElement("          quickSort(L, j - 1);");
+        listModel.addElement("          quickSort(j + 1, R);");
+        listModel.addElement("    }");
+        linkeListModel.setModel(listModel);
+    }
+
+    int count = 0;
+
+    List<Quick> listQuick = new ArrayList();
+
+    /*
+    public void quick(int start, int end) {
+        if (start >= end) {
+            return;
+        }
+        int key = start;
+        int i = start + 1;
+        int j = end;
+        int temp;
+
+        listQuick.add(new Quick(false, key, i, j, start, end, -1, -1, true, false, false, false, false));
+
+        while (i <= j) {
+            while (i <= end && listTempQuick.get(i) <= listTempQuick.get(key)) {
+                i++;
+                listQuick.add(new Quick(false, key, i, j, start, end, -1, -1, false, true, false, false, false));
+            }
+            while (j > start && listTempQuick.get(j) >= listTempQuick.get(key)) {
+                j--;
+                listQuick.add(new Quick(false, key, i, j, start, end, -1, -1, false, false, true, false, false));
+            }
+            listQuick.add(new Quick(false, key, i, j, start, end, -1, -1, false, false, false, true, false));
+            if (i > j) {
+                //swap a[key], a[j]
+                int tempSort = listTempQuick.get(key);
+                listTempQuick.set(key, listTempQuick.get(j));
+                listTempQuick.set(j, tempSort);
+                listQuick.add(new Quick(true, key, i, j, start, end, key, j));
+            } else {
+                listQuick.add(new Quick(false, key, i, j, start, end, -1, -1, false, false, false, false, true));
+                //swap (a[i] , a[j])
+                int tempSort = listTempQuick.get(i);
+                listTempQuick.set(i, listTempQuick.get(j));
+                listTempQuick.set(j, tempSort);
+                listQuick.add(new Quick(true, key, i, j, start, end, i, j));
+            }
+            quick(start, j - 1);
+            quick(j + 1, end);
+        }
+    }
+     */
+    public synchronized void quickSort() {
+        listQuick.clear();
+        listTempQuick.clear();
+        listTempQuick.addAll(arr);
+        sort(listTempQuick, this.start - 1, this.end - 1);
+        System.out.println("Sorted: " + Arrays.toString(listTempQuick.toArray()));
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    for (Quick q : listQuick) {
+                        sorting();
+                        hideOutside(q.getStart(), q.getEnd());
+                        //default: -989898
+                        
+//                        if (q.getStart() != -989898 && q.getEnd() != -989898) {
+//                            sortButton(q.getStart()).setBackground(Color.CYAN);
+//                            sortButton(q.getEnd()).setBackground(Color.CYAN);
+//                        }
+                        if (q.getI() != -989898 && q.getJ() != -989898) {
+                            sortButton(q.getI()).setBackground(new Color(204, 255, 204));
+                            sortButton(q.getJ()).setBackground(new Color(255, 204, 204));
+                        }
+                        
+                        if (q.getPivot() != -989898) {
+                            sortButton(q.getPivot()).setBackground(new Color(204,153,255));
+                        }
+
+                        if (q.isSwap() && (q.getX() != q.getY())) {
+
+                            int temp = arr.get(q.getX());
+                            arr.set(q.getX(), arr.get(q.getY()));
+                            arr.set(q.getY(), temp);
+                            
+                            shift(sortButton(q.getX()), sortButton(q.getY()));
+                        }
+                        Thread.sleep(flash / 2);
+                    }
+                    doneSort();
+                    //
+                    //sắp xếp mảng thành công
+                    result = false;
+                    new ComplateSort((Frame) frame, true).setVisible(true);
+                    addQuick();
+                } catch (Exception e) {
+                    System.out.println(e);
+                }
+            }
+        }).start();
+    }
+    
+    public void hideOutside(int l, int r){
+        this.arrBtn = new Button[]{this.index1, this.index2, this.index3, this.index4, this.index5, this.index6, this.index7, this.index8, this.index9, this.index10};
+        for (int i=0; i<l; i++) {
+            arrBtn[i].setBackground(Color.GRAY);
+        }
+        for(int i=r+1; i<=9; i++){
+            arrBtn[i].setBackground(Color.GRAY);
+        }
+    }
+
+    public void sort(List<Integer> list, int L, int R) {
+        if (L >= R) {
+            return;
+        }
+
+        int key = listTempQuick.get((L + R) / 2);
+
+        int k = getPivot(listTempQuick, L, R, key);
+
+        //add note
+        listQuick.add(new Quick(false, k, -989898, -989898, L, R, -989898, -989898));
+
+        sort(listTempQuick, L, k - 1);
+        sort(listTempQuick, k, R);
+    }
+
+    int getPivot(List<Integer> list, int L, int R, int key) {
+        int iL = L;
+        int iR = R;
+
+        listQuick.add(new Quick(false, -989898, iL, iR, L, R, -989898, -989898));
+        while (iL <= iR) {
+            while (listTempQuick.get(iL) < key) {
+                iL++;
+                listQuick.add(new Quick(false, -989898, iL, iR, L, R, -989898, -989898));
+            }
+            while (listTempQuick.get(iR) > key) {
+                iR--;
+                listQuick.add(new Quick(false, -989898, iL, iR, L, R, -989898, -989898));
+            }
+            if (iL <= iR) {
+                //swap(a[iL], a[iR])
+                int temp = listTempQuick.get(iL);
+                listTempQuick.set(iL, listTempQuick.get(iR));
+                listTempQuick.set(iR, temp);
+                //System.out.println("Swap(" + iL + "-" + iR + ")");
+                //System.out.println("^"+Arrays.toString(list.toArray()));
+
+                //add note
+                listQuick.add(new Quick(true, -989898, iL, iR, L, R, iL, iR));
+                iL++;
+                iR--;
+            }
+        }
+        return iL;
+    }
+
+    /*
+                        QUICK SORT END
+    ============================================================================
+     */
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -1114,7 +1411,7 @@ public class MainForm extends javax.swing.JFrame {
         btnCreate = new com.swing.Button();
         btnDelete = new com.swing.Button();
         pnCode = new javax.swing.JPanel();
-        jScrollPane1 = new javax.swing.JScrollPane();
+        jScrollPane1 = new com.swing.scroll.win11.ScrollPaneWin11();
         linkeListModel = new javax.swing.JList<>();
         jLabel7 = new javax.swing.JLabel();
         btnCreateRand = new com.swing.Button();
@@ -1122,13 +1419,13 @@ public class MainForm extends javax.swing.JFrame {
         jSeparator1 = new javax.swing.JSeparator();
         pnListlistAlgoritmi = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        rdoQuickSort = new javax.swing.JRadioButton();
-        rdoInterchangeSort = new javax.swing.JRadioButton();
-        rdoSelectionSort = new javax.swing.JRadioButton();
-        rdoBubbleSort = new javax.swing.JRadioButton();
-        rdoMergeSort = new javax.swing.JRadioButton();
-        rdoShellSort = new javax.swing.JRadioButton();
-        rdoInsertionSort = new javax.swing.JRadioButton();
+        rdoInterchangeSort = new com.swing.RadioButtonCustom();
+        rdoSelectionSort = new com.swing.RadioButtonCustom();
+        rdoBubbleSort = new com.swing.RadioButtonCustom();
+        rdoMergeSort = new com.swing.RadioButtonCustom();
+        rdoShellSort = new com.swing.RadioButtonCustom();
+        rdoQuickSort = new com.swing.RadioButtonCustom();
+        rdoInsertionSort = new com.swing.RadioButtonCustom();
         btnSort = new com.swing.Button();
         index12 = new com.swing.Button();
         index13 = new com.swing.Button();
@@ -1136,11 +1433,11 @@ public class MainForm extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jSeparator2 = new javax.swing.JSeparator();
-        rdoSortAZ = new javax.swing.JRadioButton();
-        rdoSortZA = new javax.swing.JRadioButton();
         btnCreateFromKey = new com.swing.Button();
-        sdFlash = new javax.swing.JSlider();
         index14 = new com.swing.Button();
+        sdFlash = new swing.slider.SliderGradient();
+        rdoSortAZ = new com.swing.RadioButtonCustom();
+        rdoSortZA = new com.swing.RadioButtonCustom();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Phần mềm mô phỏng thuật toán sắp xếp");
@@ -1156,7 +1453,7 @@ public class MainForm extends javax.swing.JFrame {
         lblTittle.setForeground(new java.awt.Color(0, 153, 153));
         lblTittle.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblTittle.setText("         MÔ PHỎNG THUẬT TOÁN SẮP XẾP               ");
-        jPanel2.add(lblTittle, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 0, 670, 80));
+        jPanel2.add(lblTittle, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1270, 80));
 
         lblInfor.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/library/icon/businessman.png"))); // NOI18N
         lblInfor.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -1252,7 +1549,7 @@ public class MainForm extends javax.swing.JFrame {
                 btnCreateActionPerformed(evt);
             }
         });
-        jPanel4.add(btnCreate, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 78, 240, -1));
+        jPanel4.add(btnCreate, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 75, 240, 30));
 
         btnDelete.setBackground(new java.awt.Color(255, 102, 102));
         btnDelete.setText("Xóa mảng");
@@ -1317,158 +1614,82 @@ public class MainForm extends javax.swing.JFrame {
 
         pnListlistAlgoritmi.setBackground(new java.awt.Color(244, 244, 244));
         pnListlistAlgoritmi.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 0, 1, new java.awt.Color(0, 0, 0)));
+        pnListlistAlgoritmi.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel1.setText("Các thuật toán");
+        pnListlistAlgoritmi.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(19, 10, -1, -1));
 
-        rdoQuickSort.setBackground(new java.awt.Color(244, 244, 244));
-        buttonGroup2.add(rdoQuickSort);
-        rdoQuickSort.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        rdoQuickSort.setText("Quick Sort");
-        rdoQuickSort.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                rdoQuickSortMouseClicked(evt);
-            }
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                rdoQuickSortMouseEntered(evt);
-            }
-        });
-
-        rdoInterchangeSort.setBackground(new java.awt.Color(244, 244, 244));
         buttonGroup2.add(rdoInterchangeSort);
-        rdoInterchangeSort.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         rdoInterchangeSort.setSelected(true);
         rdoInterchangeSort.setText("Interchange Sort");
-        rdoInterchangeSort.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                rdoInterchangeSortMouseClicked(evt);
-            }
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                rdoInterchangeSortMouseEntered(evt);
-            }
-        });
+        rdoInterchangeSort.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         rdoInterchangeSort.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 rdoInterchangeSortActionPerformed(evt);
             }
         });
+        pnListlistAlgoritmi.add(rdoInterchangeSort, new org.netbeans.lib.awtextra.AbsoluteConstraints(39, 33, -1, 40));
 
-        rdoSelectionSort.setBackground(new java.awt.Color(244, 244, 244));
         buttonGroup2.add(rdoSelectionSort);
-        rdoSelectionSort.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         rdoSelectionSort.setText("Selection Sort");
-        rdoSelectionSort.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                rdoSelectionSortMouseClicked(evt);
-            }
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                rdoSelectionSortMouseEntered(evt);
-            }
-        });
+        rdoSelectionSort.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         rdoSelectionSort.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 rdoSelectionSortActionPerformed(evt);
             }
         });
+        pnListlistAlgoritmi.add(rdoSelectionSort, new org.netbeans.lib.awtextra.AbsoluteConstraints(39, 71, -1, 30));
 
-        rdoBubbleSort.setBackground(new java.awt.Color(244, 244, 244));
         buttonGroup2.add(rdoBubbleSort);
-        rdoBubbleSort.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         rdoBubbleSort.setText("Bubble Sort");
-        rdoBubbleSort.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                rdoBubbleSortMouseClicked(evt);
-            }
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                rdoBubbleSortMouseEntered(evt);
-            }
-        });
+        rdoBubbleSort.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         rdoBubbleSort.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 rdoBubbleSortActionPerformed(evt);
             }
         });
+        pnListlistAlgoritmi.add(rdoBubbleSort, new org.netbeans.lib.awtextra.AbsoluteConstraints(39, 109, -1, 30));
 
-        rdoMergeSort.setBackground(new java.awt.Color(244, 244, 244));
         buttonGroup2.add(rdoMergeSort);
-        rdoMergeSort.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         rdoMergeSort.setText("Merge Sort");
-        rdoMergeSort.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                rdoMergeSortMouseClicked(evt);
-            }
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                rdoMergeSortMouseEntered(evt);
+        rdoMergeSort.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        rdoMergeSort.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rdoMergeSortActionPerformed(evt);
             }
         });
+        pnListlistAlgoritmi.add(rdoMergeSort, new org.netbeans.lib.awtextra.AbsoluteConstraints(39, 147, -1, -1));
 
-        rdoShellSort.setBackground(new java.awt.Color(244, 244, 244));
         buttonGroup2.add(rdoShellSort);
-        rdoShellSort.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         rdoShellSort.setText("Shell Sort");
-        rdoShellSort.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                rdoShellSortMouseClicked(evt);
-            }
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                rdoShellSortMouseEntered(evt);
+        rdoShellSort.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        rdoShellSort.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rdoShellSortActionPerformed(evt);
             }
         });
+        pnListlistAlgoritmi.add(rdoShellSort, new org.netbeans.lib.awtextra.AbsoluteConstraints(39, 185, -1, -1));
 
-        rdoInsertionSort.setBackground(new java.awt.Color(244, 244, 244));
+        buttonGroup2.add(rdoQuickSort);
+        rdoQuickSort.setText("Quick Sort");
+        rdoQuickSort.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        rdoQuickSort.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rdoQuickSortActionPerformed(evt);
+            }
+        });
+        pnListlistAlgoritmi.add(rdoQuickSort, new org.netbeans.lib.awtextra.AbsoluteConstraints(39, 223, -1, -1));
+
         buttonGroup2.add(rdoInsertionSort);
-        rdoInsertionSort.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         rdoInsertionSort.setText("Insertion Sort");
-        rdoInsertionSort.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                rdoInsertionSortMouseClicked(evt);
-            }
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                rdoInsertionSortMouseEntered(evt);
+        rdoInsertionSort.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        rdoInsertionSort.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rdoInsertionSortActionPerformed(evt);
             }
         });
-
-        javax.swing.GroupLayout pnListlistAlgoritmiLayout = new javax.swing.GroupLayout(pnListlistAlgoritmi);
-        pnListlistAlgoritmi.setLayout(pnListlistAlgoritmiLayout);
-        pnListlistAlgoritmiLayout.setHorizontalGroup(
-            pnListlistAlgoritmiLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnListlistAlgoritmiLayout.createSequentialGroup()
-                .addGap(19, 19, 19)
-                .addGroup(pnListlistAlgoritmiLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1)
-                    .addGroup(pnListlistAlgoritmiLayout.createSequentialGroup()
-                        .addGap(20, 20, 20)
-                        .addGroup(pnListlistAlgoritmiLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(rdoSelectionSort)
-                            .addComponent(rdoInterchangeSort)
-                            .addComponent(rdoBubbleSort)
-                            .addComponent(rdoMergeSort)
-                            .addComponent(rdoShellSort)
-                            .addComponent(rdoQuickSort)
-                            .addComponent(rdoInsertionSort))))
-                .addContainerGap(41, Short.MAX_VALUE))
-        );
-        pnListlistAlgoritmiLayout.setVerticalGroup(
-            pnListlistAlgoritmiLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnListlistAlgoritmiLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel1)
-                .addGap(21, 21, 21)
-                .addComponent(rdoInterchangeSort)
-                .addGap(10, 10, 10)
-                .addComponent(rdoSelectionSort)
-                .addGap(10, 10, 10)
-                .addComponent(rdoBubbleSort)
-                .addGap(10, 10, 10)
-                .addComponent(rdoMergeSort)
-                .addGap(10, 10, 10)
-                .addComponent(rdoShellSort)
-                .addGap(10, 10, 10)
-                .addComponent(rdoQuickSort)
-                .addGap(10, 10, 10)
-                .addComponent(rdoInsertionSort)
-                .addContainerGap(17, Short.MAX_VALUE))
-        );
+        pnListlistAlgoritmi.add(rdoInsertionSort, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 260, -1, -1));
 
         jPanel4.add(pnListlistAlgoritmi, new org.netbeans.lib.awtextra.AbsoluteConstraints(757, 12, 200, 287));
 
@@ -1480,7 +1701,7 @@ public class MainForm extends javax.swing.JFrame {
                 btnSortActionPerformed(evt);
             }
         });
-        jPanel4.add(btnSort, new org.netbeans.lib.awtextra.AbsoluteConstraints(990, 260, 230, 30));
+        jPanel4.add(btnSort, new org.netbeans.lib.awtextra.AbsoluteConstraints(990, 260, 230, 40));
 
         index12.setBackground(new java.awt.Color(255, 204, 204));
         index12.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -1507,42 +1728,19 @@ public class MainForm extends javax.swing.JFrame {
         jPanel4.add(index13, new org.netbeans.lib.awtextra.AbsoluteConstraints(1000, 100, 25, 25));
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel3.setText("Giá trị của biến i");
+        jLabel3.setText("Biến i");
         jPanel4.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(1050, 20, 130, 30));
 
         jLabel4.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel4.setText("Giá trị của biến j");
+        jLabel4.setText("Biến j");
         jPanel4.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(1050, 60, 130, 30));
 
         jLabel5.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel5.setText("Gía trị Min/Max");
+        jLabel5.setText("Min/Max");
         jPanel4.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(1050, 100, 140, 30));
 
         jSeparator2.setForeground(new java.awt.Color(0, 0, 0));
-        jPanel4.add(jSeparator2, new org.netbeans.lib.awtextra.AbsoluteConstraints(970, 150, 260, 10));
-
-        rdoSortAZ.setBackground(new java.awt.Color(244, 244, 244));
-        buttonGroup1.add(rdoSortAZ);
-        rdoSortAZ.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        rdoSortAZ.setSelected(true);
-        rdoSortAZ.setText("Sắp xếp tăng dần");
-        rdoSortAZ.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                rdoSortAZActionPerformed(evt);
-            }
-        });
-        jPanel4.add(rdoSortAZ, new org.netbeans.lib.awtextra.AbsoluteConstraints(1000, 160, -1, -1));
-
-        rdoSortZA.setBackground(new java.awt.Color(244, 244, 244));
-        buttonGroup1.add(rdoSortZA);
-        rdoSortZA.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        rdoSortZA.setText("Sắp xếp giảm dần");
-        rdoSortZA.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                rdoSortZAActionPerformed(evt);
-            }
-        });
-        jPanel4.add(rdoSortZA, new org.netbeans.lib.awtextra.AbsoluteConstraints(1000, 190, -1, -1));
+        jPanel4.add(jSeparator2, new org.netbeans.lib.awtextra.AbsoluteConstraints(970, 140, 260, 20));
 
         btnCreateFromKey.setBackground(new java.awt.Color(255, 102, 255));
         btnCreateFromKey.setText("Thủ công");
@@ -1559,20 +1757,6 @@ public class MainForm extends javax.swing.JFrame {
         });
         jPanel4.add(btnCreateFromKey, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 261, 110, -1));
 
-        sdFlash.setBackground(new java.awt.Color(244, 244, 244));
-        sdFlash.setMajorTickSpacing(10);
-        sdFlash.setMaximum(50);
-        sdFlash.setMinimum(10);
-        sdFlash.setMinorTickSpacing(10);
-        sdFlash.setPaintLabels(true);
-        sdFlash.setValue(30);
-        sdFlash.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                sdFlashMouseEntered(evt);
-            }
-        });
-        jPanel4.add(sdFlash, new org.netbeans.lib.awtextra.AbsoluteConstraints(990, 210, 230, 50));
-
         index14.setBackground(new java.awt.Color(204, 255, 204));
         index14.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         index14.setForeground(new java.awt.Color(0, 153, 0));
@@ -1585,7 +1769,27 @@ public class MainForm extends javax.swing.JFrame {
         });
         jPanel4.add(index14, new org.netbeans.lib.awtextra.AbsoluteConstraints(1000, 20, 25, 25));
 
-        jPanel1.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 360, 1220, 310));
+        sdFlash.setBackground(new java.awt.Color(244, 244, 244));
+        sdFlash.setMajorTickSpacing(10);
+        sdFlash.setMaximum(50);
+        sdFlash.setMinimum(10);
+        sdFlash.setMinorTickSpacing(10);
+        sdFlash.setPaintLabels(true);
+        sdFlash.setSnapToTicks(true);
+        sdFlash.setValue(30);
+        jPanel4.add(sdFlash, new org.netbeans.lib.awtextra.AbsoluteConstraints(980, 210, 250, 50));
+
+        buttonGroup1.add(rdoSortAZ);
+        rdoSortAZ.setSelected(true);
+        rdoSortAZ.setText("Sắp xếp tăng dần");
+        rdoSortAZ.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jPanel4.add(rdoSortAZ, new org.netbeans.lib.awtextra.AbsoluteConstraints(1000, 150, -1, -1));
+
+        buttonGroup1.add(rdoSortZA);
+        rdoSortZA.setText("Sắp xếp giảm dần");
+        jPanel4.add(rdoSortZA, new org.netbeans.lib.awtextra.AbsoluteConstraints(1000, 190, -1, -1));
+
+        jPanel1.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 360, 1250, 310));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -1698,10 +1902,10 @@ public class MainForm extends javax.swing.JFrame {
             HuongDanDungFile fl = new HuongDanDungFile();
             String path = fl.chooserFile();
             snTheNum.setValue(fl.readLength(path));
-            if (!fl.validate(path, (int) snTheNum.getValue())){
+            if (!fl.validate(path, (int) snTheNum.getValue())) {
                 return;
             }
-            
+
             this.arr.clear();
             this.arr.addAll(fl.readArr(path));
             //System.out.println(this.arr.toString());
@@ -1710,9 +1914,9 @@ public class MainForm extends javax.swing.JFrame {
             btnSort.setEnabled(true);
             btnDelete.setEnabled(true);
         } catch (IOException ex) {
-            //Logger.getLogger(MainForm.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(MainForm.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
     }//GEN-LAST:event_btnCreateFromFileActionPerformed
 
     public boolean valid() {
@@ -1731,6 +1935,10 @@ public class MainForm extends javax.swing.JFrame {
         if (btnSort.getText().equalsIgnoreCase("Sắp xếp")) {
             if (valid()) {
                 startSort();
+                for (int i = this.start - 1; i <= this.end - 1; i++) {
+                    System.out.print(" " + arr.get(i));
+                }
+                System.out.println("");
                 btnSort.setText("Dừng!");
                 if (rdoInterchangeSort.isSelected()) {
                     interchangeSort(this.start, this.end);
@@ -1744,6 +1952,8 @@ public class MainForm extends javax.swing.JFrame {
 
                 } else if (rdoQuickSort.isSelected()) {
 
+                    //qs(this.start - 1, this.end - 1);
+                    quickSort();
                 } else if (rdoInsertionSort.isSelected()) {
 
                 }
@@ -1789,137 +1999,58 @@ public class MainForm extends javax.swing.JFrame {
         btnSort.setEnabled(true);
     }//GEN-LAST:event_btnCreateFromKeyActionPerformed
 
-    private void rdoInterchangeSortMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_rdoInterchangeSortMouseClicked
 
-    }//GEN-LAST:event_rdoInterchangeSortMouseClicked
+    private void lblInforMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblInforMouseEntered
+        //initPopUp("Thông tin sản phẩm");
+    }//GEN-LAST:event_lblInforMouseEntered
 
-    private void rdoSelectionSortMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_rdoSelectionSortMouseClicked
+    private void btnCreateFromKeyMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCreateFromKeyMouseEntered
+        //initPopUp("Nhập vào các giá trị cho mảng");
+    }//GEN-LAST:event_btnCreateFromKeyMouseEntered
 
-    }//GEN-LAST:event_rdoSelectionSortMouseClicked
+    private void btnCreateFromFileMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCreateFromFileMouseEntered
+        //initPopUp("Thêm các giá trị cho mảng bằng file có sẵng");
+    }//GEN-LAST:event_btnCreateFromFileMouseEntered
 
-    private void rdoBubbleSortMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_rdoBubbleSortMouseClicked
+    private void pnCodeMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pnCodeMouseEntered
+        //initPopUp("Khung mô tả thuật toán bằng code");
+    }//GEN-LAST:event_pnCodeMouseEntered
 
-    }//GEN-LAST:event_rdoBubbleSortMouseClicked
+    private void pnManHinhMoPhongMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pnManHinhMoPhongMouseEntered
+        //initPopUp("Màn hình mô phỏng thuật toán");
+    }//GEN-LAST:event_pnManHinhMoPhongMouseEntered
 
-    private void rdoMergeSortMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_rdoMergeSortMouseClicked
+    private void index14ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_index14ActionPerformed
 
-    }//GEN-LAST:event_rdoMergeSortMouseClicked
-
-    private void rdoShellSortMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_rdoShellSortMouseClicked
-
-    }//GEN-LAST:event_rdoShellSortMouseClicked
-
-    private void rdoQuickSortMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_rdoQuickSortMouseClicked
-
-    }//GEN-LAST:event_rdoQuickSortMouseClicked
-
-    private void rdoInsertionSortMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_rdoInsertionSortMouseClicked
-
-    }//GEN-LAST:event_rdoInsertionSortMouseClicked
+    }//GEN-LAST:event_index14ActionPerformed
 
     private void rdoInterchangeSortActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rdoInterchangeSortActionPerformed
         addInterchange();
     }//GEN-LAST:event_rdoInterchangeSortActionPerformed
 
-    private void rdoBubbleSortActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rdoBubbleSortActionPerformed
-        addBubble();
-    }//GEN-LAST:event_rdoBubbleSortActionPerformed
-
     private void rdoSelectionSortActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rdoSelectionSortActionPerformed
         addSelection();
     }//GEN-LAST:event_rdoSelectionSortActionPerformed
 
-    private void rdoSortAZActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rdoSortAZActionPerformed
-        if (rdoInterchangeSort.isSelected()) {
-            addInterchange();
-        } else if (rdoBubbleSort.isSelected()) {
-            addBubble();
-        } else if (rdoSelectionSort.isSelected()) {
-            addSelection();
-        } else if (rdoMergeSort.isSelected()) {
+    private void rdoQuickSortActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rdoQuickSortActionPerformed
+        addQuick();
+    }//GEN-LAST:event_rdoQuickSortActionPerformed
 
-        } else if (rdoShellSort.isSelected()) {
+    private void rdoBubbleSortActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rdoBubbleSortActionPerformed
+        addBubble();
+    }//GEN-LAST:event_rdoBubbleSortActionPerformed
 
-        } else if (rdoQuickSort.isSelected()) {
+    private void rdoMergeSortActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rdoMergeSortActionPerformed
+        addMerge();
+    }//GEN-LAST:event_rdoMergeSortActionPerformed
 
-        } else if (rdoInsertionSort.isSelected()) {
+    private void rdoShellSortActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rdoShellSortActionPerformed
 
-        }
-    }//GEN-LAST:event_rdoSortAZActionPerformed
+    }//GEN-LAST:event_rdoShellSortActionPerformed
 
-    private void rdoSortZAActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rdoSortZAActionPerformed
-        if (rdoInterchangeSort.isSelected()) {
-            addInterchange();
-        } else if (rdoBubbleSort.isSelected()) {
-            addBubble();
-        } else if (rdoSelectionSort.isSelected()) {
-            addSelection();
-        } else if (rdoMergeSort.isSelected()) {
+    private void rdoInsertionSortActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rdoInsertionSortActionPerformed
 
-        } else if (rdoShellSort.isSelected()) {
-
-        } else if (rdoQuickSort.isSelected()) {
-
-        } else if (rdoInsertionSort.isSelected()) {
-
-        }
-    }//GEN-LAST:event_rdoSortZAActionPerformed
-
-    private void sdFlashMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_sdFlashMouseEntered
-        initPopUp("Tùy chỉnh tốc độ chạy của thuật toán");
-    }//GEN-LAST:event_sdFlashMouseEntered
-
-    private void lblInforMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblInforMouseEntered
-        initPopUp("Thông tin sản phẩm");
-    }//GEN-LAST:event_lblInforMouseEntered
-
-    private void btnCreateFromKeyMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCreateFromKeyMouseEntered
-        initPopUp("Nhập vào các giá trị cho mảng");
-    }//GEN-LAST:event_btnCreateFromKeyMouseEntered
-
-    private void btnCreateFromFileMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCreateFromFileMouseEntered
-        initPopUp("Thêm các giá trị cho mảng bằng file có sẵng");
-    }//GEN-LAST:event_btnCreateFromFileMouseEntered
-
-    private void pnCodeMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pnCodeMouseEntered
-        initPopUp("Khung mô tả thuật toán bằng code");
-    }//GEN-LAST:event_pnCodeMouseEntered
-
-    private void pnManHinhMoPhongMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pnManHinhMoPhongMouseEntered
-        initPopUp("Màn hình mô phỏng thuật toán");
-    }//GEN-LAST:event_pnManHinhMoPhongMouseEntered
-
-    private void rdoInterchangeSortMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_rdoInterchangeSortMouseEntered
-        initPopUp("Thuật toán sắp xếp đổi chỗ");
-    }//GEN-LAST:event_rdoInterchangeSortMouseEntered
-
-    private void rdoSelectionSortMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_rdoSelectionSortMouseEntered
-        initPopUp("Thuật toán sắp xếp chọn");
-    }//GEN-LAST:event_rdoSelectionSortMouseEntered
-
-    private void rdoBubbleSortMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_rdoBubbleSortMouseEntered
-        initPopUp("Thuật toán sắp xếp nổi bọt");
-    }//GEN-LAST:event_rdoBubbleSortMouseEntered
-
-    private void rdoMergeSortMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_rdoMergeSortMouseEntered
-        initPopUp("Thuật toán sắp xếp trộn");
-    }//GEN-LAST:event_rdoMergeSortMouseEntered
-
-    private void rdoShellSortMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_rdoShellSortMouseEntered
-        initPopUp("Thuật toán sắp xếp chèn theo cặp");
-    }//GEN-LAST:event_rdoShellSortMouseEntered
-
-    private void rdoQuickSortMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_rdoQuickSortMouseEntered
-        initPopUp("Thuật toán sắp xếp nhanh");
-    }//GEN-LAST:event_rdoQuickSortMouseEntered
-
-    private void rdoInsertionSortMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_rdoInsertionSortMouseEntered
-        initPopUp("Thuật toán sắp xếp chèn");
-    }//GEN-LAST:event_rdoInsertionSortMouseEntered
-
-    private void index14ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_index14ActionPerformed
-
-    }//GEN-LAST:event_index14ActionPerformed
+    }//GEN-LAST:event_rdoInsertionSortActionPerformed
 
     /**
      * @param args the command line arguments
@@ -1997,16 +2128,16 @@ public class MainForm extends javax.swing.JFrame {
     private javax.swing.JPanel pnCode;
     private javax.swing.JPanel pnListlistAlgoritmi;
     private javax.swing.JPanel pnManHinhMoPhong;
-    private javax.swing.JRadioButton rdoBubbleSort;
-    private javax.swing.JRadioButton rdoInsertionSort;
-    private javax.swing.JRadioButton rdoInterchangeSort;
-    private javax.swing.JRadioButton rdoMergeSort;
-    private javax.swing.JRadioButton rdoQuickSort;
-    private javax.swing.JRadioButton rdoSelectionSort;
-    private javax.swing.JRadioButton rdoShellSort;
-    private javax.swing.JRadioButton rdoSortAZ;
-    private javax.swing.JRadioButton rdoSortZA;
-    private javax.swing.JSlider sdFlash;
+    private com.swing.RadioButtonCustom rdoBubbleSort;
+    private com.swing.RadioButtonCustom rdoInsertionSort;
+    private com.swing.RadioButtonCustom rdoInterchangeSort;
+    private com.swing.RadioButtonCustom rdoMergeSort;
+    private com.swing.RadioButtonCustom rdoQuickSort;
+    private com.swing.RadioButtonCustom rdoSelectionSort;
+    private com.swing.RadioButtonCustom rdoShellSort;
+    private com.swing.RadioButtonCustom rdoSortAZ;
+    private com.swing.RadioButtonCustom rdoSortZA;
+    private swing.slider.SliderGradient sdFlash;
     private javax.swing.JSpinner snTheNum;
     // End of variables declaration//GEN-END:variables
 }
