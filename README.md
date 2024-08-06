@@ -3,7 +3,7 @@
 
 - Mở Netbeans và chạy trang "com.GUI.MainForm.java"
 
-![GUI](https://raw.githubusercontent.com/Theanishtar/Images/master/MoPhongThuatToan_Javaswing/main.gif)
+![GUI](./assets/demo.gif)
 
 - Giao diện 
 ![GUI](https://raw.githubusercontent.com/Theanishtar/Images/master/MoPhongThuatToan_Javaswing/container.png)
@@ -27,9 +27,3 @@
 - File INP mẫu
 ![inp](https://raw.githubusercontent.com/Theanishtar/Images/master/MoPhongThuatToan_Javaswing/inpArr.png)
 
-## Sắp xếp
-- Bắt đầu sắp xếp
-![inp](https://raw.githubusercontent.com/Theanishtar/Images/master/MoPhongThuatToan_Javaswing/beginSort.png)
-
-- Sắp xếp thành công
-+ chưa load ảnh minh họa

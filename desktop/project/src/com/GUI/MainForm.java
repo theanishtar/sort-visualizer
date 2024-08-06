@@ -76,7 +76,7 @@ public class MainForm extends javax.swing.JFrame {
         initComponents();
         visibleFalseMid();
         //runTittle();Cascadia Code
-        
+
         linkeListModel.setFont(new Font("Fira Code", Font.PLAIN, 18));// set the font
 
         btnSort.setEnabled(false);
@@ -86,6 +86,8 @@ public class MainForm extends javax.swing.JFrame {
 
         //runTittle();
         addInterchange();
+        
+        snTheNum.setVisible(false);
 
         //Set Icon => JFrame
         URL urlIconMain = MainForm.class.getResource("/com/library/icon/increase.png");
@@ -339,12 +341,12 @@ public class MainForm extends javax.swing.JFrame {
 
     public synchronized void hoanVi(Button btn1, Button btn2) {
         String msgBtn1 = btn1.getText();
-                String msgBtn2 = btn2.getText();
-                
-                //thay đổi nội dung
-                btn1.setText(msgBtn2);
-                btn2.setText(msgBtn1);
-                
+        String msgBtn2 = btn2.getText();
+
+        //thay đổi nội dung
+        btn1.setText(msgBtn2);
+        btn2.setText(msgBtn1);
+
 //        new Thread(new Runnable() {
 //            @Override
 //            public synchronized void run() {
@@ -449,7 +451,7 @@ public class MainForm extends javax.swing.JFrame {
     }
 
     public synchronized void shift(Button btn1, Button btn2) {
-        if(btn1.getX() == btn2.getX() && btn1.getY() == btn2.getY()){
+        if (btn1.getX() == btn2.getX() && btn1.getY() == btn2.getY()) {
             System.out.println("Y: BTN1 ||| BTN2");
             return;
         }
@@ -550,7 +552,6 @@ public class MainForm extends javax.swing.JFrame {
         btn2.setText(msgBtn1);
 
     }
-    
 
     public synchronized void goUp(Button btn1) {
         getFlash();
@@ -1281,7 +1282,7 @@ public class MainForm extends javax.swing.JFrame {
                         sorting();
                         hideOutside(q.getStart(), q.getEnd());
                         //default: -989898
-                        
+
 //                        if (q.getStart() != -989898 && q.getEnd() != -989898) {
 //                            sortButton(q.getStart()).setBackground(Color.CYAN);
 //                            sortButton(q.getEnd()).setBackground(Color.CYAN);
@@ -1290,9 +1291,9 @@ public class MainForm extends javax.swing.JFrame {
                             sortButton(q.getI()).setBackground(new Color(204, 255, 204));
                             sortButton(q.getJ()).setBackground(new Color(255, 204, 204));
                         }
-                        
+
                         if (q.getPivot() != -989898) {
-                            sortButton(q.getPivot()).setBackground(new Color(204,153,255));
+                            sortButton(q.getPivot()).setBackground(new Color(204, 153, 255));
                         }
 
                         if (q.isSwap() && (q.getX() != q.getY())) {
@@ -1300,7 +1301,7 @@ public class MainForm extends javax.swing.JFrame {
                             int temp = arr.get(q.getX());
                             arr.set(q.getX(), arr.get(q.getY()));
                             arr.set(q.getY(), temp);
-                            
+
                             shift(sortButton(q.getX()), sortButton(q.getY()));
                         }
                         Thread.sleep(flash / 2);
@@ -1317,13 +1318,13 @@ public class MainForm extends javax.swing.JFrame {
             }
         }).start();
     }
-    
-    public void hideOutside(int l, int r){
+
+    public void hideOutside(int l, int r) {
         this.arrBtn = new Button[]{this.index1, this.index2, this.index3, this.index4, this.index5, this.index6, this.index7, this.index8, this.index9, this.index10};
-        for (int i=0; i<l; i++) {
+        for (int i = 0; i < l; i++) {
             arrBtn[i].setBackground(Color.GRAY);
         }
-        for(int i=r+1; i<=9; i++){
+        for (int i = r + 1; i <= 9; i++) {
             arrBtn[i].setBackground(Color.GRAY);
         }
     }
@@ -1438,6 +1439,9 @@ public class MainForm extends javax.swing.JFrame {
         sdFlash = new swing.slider.SliderGradient();
         rdoSortAZ = new com.swing.RadioButtonCustom();
         rdoSortZA = new com.swing.RadioButtonCustom();
+        jLabel6 = new javax.swing.JLabel();
+        lblTheNum = new javax.swing.JLabel();
+        jLabel9 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Phần mềm mô phỏng thuật toán sắp xếp");
@@ -1535,7 +1539,7 @@ public class MainForm extends javax.swing.JFrame {
         snTheNum.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         snTheNum.setModel(new javax.swing.SpinnerNumberModel(3, 3, 10, 1));
         snTheNum.setBorder(null);
-        jPanel4.add(snTheNum, new org.netbeans.lib.awtextra.AbsoluteConstraints(118, 30, 130, 30));
+        jPanel4.add(snTheNum, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 100, 130, 30));
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         jLabel2.setText("Số phần tử");
@@ -1789,6 +1793,27 @@ public class MainForm extends javax.swing.JFrame {
         rdoSortZA.setText("Sắp xếp giảm dần");
         jPanel4.add(rdoSortZA, new org.netbeans.lib.awtextra.AbsoluteConstraints(1000, 190, -1, -1));
 
+        jLabel6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/library/icon/minus.png"))); // NOI18N
+        jLabel6.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel6MouseClicked(evt);
+            }
+        });
+        jPanel4.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 30, -1, -1));
+
+        lblTheNum.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        lblTheNum.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblTheNum.setText("1");
+        jPanel4.add(lblTheNum, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 30, 50, 30));
+
+        jLabel9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/library/icon/plus.png"))); // NOI18N
+        jLabel9.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel9MouseClicked(evt);
+            }
+        });
+        jPanel4.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 30, -1, -1));
+
         jPanel1.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 360, 1250, 310));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -1826,7 +1851,8 @@ public class MainForm extends javax.swing.JFrame {
         visibleFalseMid();
 
         //dựa vào số phần tử để khởi tạo mảng
-        int theNum = (int) snTheNum.getValue();
+//        int theNum = (int) snTheNum.getValue();
+        int theNum = (int) Integer.valueOf(lblTheNum.getText());
         this.length = theNum;
 
         switch (theNum) {
@@ -2052,6 +2078,23 @@ public class MainForm extends javax.swing.JFrame {
 
     }//GEN-LAST:event_rdoInsertionSortActionPerformed
 
+    private void jLabel9MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel9MouseClicked
+        int length = Integer.valueOf(lblTheNum.getText());
+        if (length < 10) {
+            length++;
+            lblTheNum.setText(String.valueOf(length));
+        }
+
+    }//GEN-LAST:event_jLabel9MouseClicked
+
+    private void jLabel6MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel6MouseClicked
+        int length = Integer.valueOf(lblTheNum.getText());
+        if (length > 3) {
+            length--;
+            lblTheNum.setText(String.valueOf(length));
+        }
+    }//GEN-LAST:event_jLabel6MouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -2115,7 +2158,9 @@ public class MainForm extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel4;
@@ -2123,6 +2168,7 @@ public class MainForm extends javax.swing.JFrame {
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JLabel lblInfor;
+    private javax.swing.JLabel lblTheNum;
     private javax.swing.JLabel lblTittle;
     private javax.swing.JList<String> linkeListModel;
     private javax.swing.JPanel pnCode;
