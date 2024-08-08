@@ -1,0 +1,175 @@
+:root {
+  --color1-bg: rgba(83, 46, 63, 0.3);
+  --color1-border: rgba(112, 73, 93, 1);
+  --color2-bg: rgba(38, 52, 84, 0.3);
+  --color2-border: rgba(52, 88, 133, 1);
+  --color3-bg: rgba(57, 80, 82, 0.3);
+  --color3-border: rgb(92, 140, 130);
+  --color4-bg: rgba(44, 60, 79, 0.3);
+  --color4-border: rgba(64, 96, 115, 1);
+  --color5-bg: rgba(61, 43, 88, 0.3);
+  --color5-border: rgba(88, 74, 131, 1);
+  --color6-bg: rgba(83, 79, 53, 0.3);
+  --color6-border: rgb(131, 120, 75);
+  --color7-bg: rgba(56, 83, 53, 0.3);
+  --color7-border: rgb(75, 131, 97);
+  --color8-bg: rgba(53, 78, 83, 0.3);
+  --color8-border: rgb(75, 84, 131);
+  --color9-bg: rgba(83, 53, 81, 0.3);
+  --color9-border: rgb(115, 75, 131);
+  --color0-bg: rgba(83, 53, 53, 0.3);
+  --color0-border: rgb(131, 75, 75);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  height: 100vh;
+  background-color: #251F35;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.container {
+  display: flex;
+  align-items: flex-end;
+  gap: 0;
+  /* Để các cột nằm liền kề nhau */
+  margin-bottom: 10px;
+  /* Tạo khoảng cách cho các chỉ mục */
+}
+
+.column {
+  width: 50px;
+  color: white;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  border-radius: 5px 5px 0 0;
+  /* Chỉ bo góc trên */
+  padding: 10px;
+  margin: 0 2.5px;
+  /* Khoảng cách giữa các cột */
+  transition: swap 0.5s ease 0.5s ease;
+  cursor: pointer;
+}
+
+/* Cột 1 */
+.column1 {
+  background-color: var(--color1-bg);
+  border: 2px solid var(--color1-border);
+}
+
+/* Cột 2 */
+.column2 {
+  background-color: var(--color2-bg);
+  border: 2px solid var(--color2-border);
+}
+
+/* Cột 3 */
+.column3 {
+  background-color: var(--color3-bg);
+  border: 2px solid var(--color3-border);
+}
+
+/* Cột 4 */
+.column4 {
+  background-color: var(--color4-bg);
+  border: 2px solid var(--color4-border);
+}
+
+/* Cột 5 */
+.column5 {
+  background-color: var(--color5-bg);
+  border: 2px solid var(--color5-border);
+}
+
+/* Cột 6 */
+.column6 {
+  background-color: var(--color6-bg);
+  border: 2px solid var(--color6-border);
+}
+
+/* Cột 7 */
+.column7 {
+  background-color: var(--color7-bg);
+  border: 2px solid var(--color7-border);
+}
+
+/* Cột 8 */
+.column8 {
+  background-color: var(--color8-bg);
+  border: 2px solid var(--color8-border);
+}
+
+/* Cột 9 */
+.column9 {
+  background-color: var(--color9-bg);
+  border: 2px solid var(--color9-border);
+}
+
+/* Cột 0 */
+.column0 {
+  background-color: var(--color0-bg);
+  border: 2px solid var(--color0-border);
+}
+
+.index,
+.letters,
+.numerals {
+  display: flex;
+  justify-content: space-between;
+  /* width: calc(6 * 55px + 10px); */
+  /* Tính toán chiều rộng của container chỉ mục */
+}
+
+.index-item,
+.letter-item,
+.numerals-item {
+  width: 50px;
+  text-align: center;
+  color: #00f2ff;
+  font-weight: bold;
+  position: relative;
+  top: 20px;
+  padding: 10px;
+  margin: 0 2.5px;
+  /* Điều chỉnh vị trí chỉ mục để nằm ngay dưới các cột */
+}
+
+.letter-item,
+.numerals-item {
+  color: #ffe100;
+}
+
+.letters {
+  margin-top: 10px;
+  /* Khoảng cách giữa chỉ mục và dãy chữ cái */
+}
+
+.numerals {
+  margin-top: 10px;
+  /* Khoảng cách giữa chỉ mục và dãy chữ cái */
+}
+
+
+
+/* JS */
+.chose {
+  color: red
+}
